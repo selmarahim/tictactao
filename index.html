@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic-Tac-Toe - Jouer contre l'IA</title>
+  <!-- Google Fonts pour une police moderne -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <!-- Inclusion de Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Tic-Tac-Toe</h1>
+    <!-- Panneau de choix du premier joueur -->
+    <div id="choice" class="choice-panel">
+      <p>Qui commence ?</p>
+      <div class="choice-buttons">
+        <button id="player-first">Je commence</button>
+        <button id="ai-first">L'IA commence</button>
+      </div>
+    </div>
+    <p class="description">Vous êtes <strong>O</strong>, l'IA est <strong>X</strong>.</p>
+    <div id="board">
+      <!-- Cases du plateau -->
+      <div class="cell" data-index="0"></div>
+      <div class="cell" data-index="1"></div>
+      <div class="cell" data-index="2"></div>
+      <div class="cell" data-index="3"></div>
+      <div class="cell" data-index="4"></div>
+      <div class="cell" data-index="5"></div>
+      <div class="cell" data-index="6"></div>
+      <div class="cell" data-index="7"></div>
+      <div class="cell" data-index="8"></div>
+    </div>
+    <button id="reset-button">Réinitialiser</button>
+    <p id="status"></p>
+    
+    <!-- Section pour les statistiques d'apprentissage -->
+    <div class="stats-container">
+      <h2>Statistiques d'apprentissage</h2>
+      <canvas id="statsChart"></canvas>
+    </div>
+  </div>
+  <script src="/script.js"></script>
+</body>
+</html>
