@@ -10,12 +10,12 @@ echo "# Tic Tac Toe - Reinforcement Learning Project
 
 ## Description
 
-Ce projet est un programme d’apprentissage par renforcement utilisant Q-Learning et Deep Q-Networks (DQN) pour jouer au jeu du Tic-Tac-Toe.
+Ce projet est un programme d’apprentissage par renforcement utilisant Q-Learning pour jouer au jeu du Tic-Tac-Toe.
 
 ## Prérequis
 
 - Python 3.x
-- Bibliothèques : Flask, NumPy, etc. (déjà utilisées dans le projet)
+- Bibliothèques : Flask, NumPy
 
 ## Instructions d'exécution
 
