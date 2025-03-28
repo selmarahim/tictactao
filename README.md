@@ -17,6 +17,8 @@ Ce projet est un programme d’apprentissage par renforcement utilisant Q-Learni
 - Python 3.x
 - Bibliothèques : Flask, NumPy
 
+pip3 install -r requirements.txt
+
 ## Instructions d'exécution
 
 1. **Entraînement de l'IA :**
