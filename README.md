@@ -35,7 +35,7 @@ python api.py
 
 Cela lance le serveur Flask pour communiquer avec l'interface web.
 
-## 📌 Technologies utilisées
+##  Technologies utilisées
 
 - Python (Flask pour le backend)
 - HTML, CSS, JavaScript (pour le front-end)

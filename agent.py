@@ -1,41 +1,41 @@
-import numpy as np
+import numpy as np 
 import random
-from collections import deque
+from collections import deque #structure de données pour gérer une memoire
 import torch
 import torch.nn as nn
 import torch.optim as optim
 
 # Réseau de neurones pour le DQN
-class DQN(nn.Module):
+class DQN(nn.Module): # classe DQN pour tous les reseau de neurone
     def __init__(self, state_size, action_size):
         super(DQN, self).__init__()
-        self.fc1 = nn.Linear(state_size, 64)
-        self.fc2 = nn.Linear(64, 64)
-        self.fc3 = nn.Linear(64, action_size)
+        self.fc1 = nn.Linear(state_size, 64) # prend état du jeu (9) et générer un vecteur de 64 neurones
+        self.fc2 = nn.Linear(64, 64) # prend vecteur 64 et genere vecteur 64 neurones
+        self.fc3 = nn.Linear(64, action_size) # on peut faire 9 actions
 
-    def forward(self, x):
+    def forward(self, x): #fonction qui décrit le passage des data a travers les differentes couches du RDN
         x = torch.relu(self.fc1(x))
         x = torch.relu(self.fc2(x))
         return self.fc3(x)
 
-# Agent DQN
+# Définition de la classe agent qui prend les decisions dans le jeu
 class Agent:
     def __init__(self, state_size, action_size):
         self.state_size = state_size
         self.action_size = action_size
-        self.memory = deque(maxlen=2000)
-        self.gamma = 0.95      # Facteur de réduction
-        self.epsilon = 1.0     # Exploration initiale
-        self.epsilon_min = 0.01
-        self.epsilon_decay = 0.995
-        self.learning_rate = 0.001
+        self.memory = deque(maxlen=2000) #memoire de l'agent
+        self.gamma = 0.95      # Facteur de réduction pour les receompenses futures ( lagent valorise les rcmps futures a 95%)
+        self.epsilon = 1.0     # Exploration initiale cad lagent va choisir des actions aléatoires au debut
+        self.epsilon_min = 0.01 #l'agent va reduire son exploration pour exploiter ce quil a appris
+        self.epsilon_decay = 0.995 #la vitesse a la quelle epsilon décroit, a chaque ep epsilon sera multiplié par 0.995 pour reduire lexploration doucement
+        self.learning_rate = 0.001 #le taux dapprentissage utilisé pour ajuster les poids du reseau de neurones
 
-        self.model = DQN(state_size, action_size)
-        self.target_model = DQN(state_size, action_size)
-        self.optimizer = optim.Adam(self.model.parameters(), lr=self.learning_rate)
-        self.loss_fn = nn.MSELoss()
+        self.model = DQN(state_size, action_size) # le modele principal de lagent 
+        self.target_model = DQN(state_size, action_size) #copie du modele pour ameliorer la stabilité de l'apprentissage
+        self.optimizer = optim.Adam(self.model.parameters(), lr=self.learning_rate) # mettre a jour des poids pendant lapprentissage
+        self.loss_fn = nn.MSELoss() #mesure lecart entre les Q-values prédires et les valeurs cibles
 
-    def check_winner(self, player, state):
+    def check_winner(self, player, state): 
         """Vérifie si le joueur `player` a gagné."""
         winning_combinations = [
             [0, 1, 2], [3, 4, 5], [6, 7, 8],  # Lignes
@@ -47,10 +47,10 @@ class Agent:
                 return True
         return False
 
-    def act(self, state):
+    def act(self, state): 
         """Choisit une action en tenant compte des règles heuristiques."""
         available_actions = [i for i in range(9) if state[i] == 0]
-        
+        #creer une liste des actions possibles 
         if not available_actions:
             return None  # Aucune action possible (plateau plein)
 
@@ -68,16 +68,16 @@ class Agent:
             if self.check_winner(-1, next_state):
                 return action
 
-        # Règle 3 : Priorité au centre (case 4) si disponible
+        # Règle 3 : Priorité au centre du plateau (case 4) si disponible
         if 4 in available_actions:
             return 4
 
         # Sinon, utiliser le modèle DQN
-        if np.random.rand() <= self.epsilon:
+        if np.random.rand() <= self.epsilon: # si lagent est en exploration (epsilon elévé)
             return random.choice(available_actions)
-
+        #state tensor convertit l'etat en un tensor pytorch pour le passer dans le modele dqn
         state_tensor = torch.FloatTensor(state).unsqueeze(0)
-        with torch.no_grad():
+        with torch.no_grad(): # pas d'entrainement 
             q_values = self.model(state_tensor).numpy().flatten()
 
         # Sélectionner la meilleure action parmi celles disponibles
@@ -85,10 +85,10 @@ class Agent:
         best_action = max(valid_q_values, key=valid_q_values.get)
 
         return best_action
-
+    #lagent stock une experience dans sa memoire ( etat,action,recmps,etat suivant,terminé)
     def remember(self, state, action, reward, next_state, done):
         self.memory.append((state, action, reward, next_state, done))
-
+    #lagent effectue lapprentissage en echantillonnant un minibatch d'experiences dans sa memoire
     def replay(self, batch_size):
         if len(self.memory) < batch_size:
             return
