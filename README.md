@@ -1,45 +1,29 @@
+Instructions d'exécution
+=========================
 
----
+1. **Installation des bibliothèques**
 
-## 🟢 **Commandes Git pour ajouter et pousser le README :**
+   Pour installer les bibliothèques nécessaires, exécutez la commande suivante dans votre terminal :
 
-1. **Créer le fichier README.md :**
+   .. code:: bash
+      pip install -r requirements.txt
 
-```bash
-echo "# Tic Tac Toe - Reinforcement Learning Project
+2. **Entraînement de l'agent**
 
-## Description
+   Si vous souhaitez entraîner l'agent, vous pouvez le faire avec la commande suivante :
 
-Ce projet est un programme d’apprentissage par renforcement utilisant Q-Learning pour jouer au jeu du Tic-Tac-Toe.
+   .. code:: bash
+      python train.py
 
-## Prérequis
+   **Note** : Ce processus n'est pas nécessaire si vous souhaitez simplement jouer, car une version pré-entraînée de l'agent est déjà enregistrée et sera utilisée pour jouer. ( tic_tac_tao_dqn.pth)
 
-- Python 3.x
-- Bibliothèques : Flask, NumPy
+3. **Lancer le serveur Flask**
 
-pip3 install -r requirements.txt
+   Une fois l'agent prêt, lancez le serveur Flask avec la commande suivante :
 
-## Instructions d'exécution
+   .. code:: bash
+      python api.py
 
-1. **Entraînement de l'IA :**
+4. **Lancer l'interface web**
 
-\`\`\`
-python train.py
-\`\`\`
-
-Cela permet d'entraîner l'IA et d'obtenir les statistiques d'apprentissage.
-
-2. **Lancer le serveur :**
-
-\`\`\`
-python api.py
-\`\`\`
-
-Cela lance le serveur Flask pour communiquer avec l'interface web.
-
-##  Technologies utilisées
-
-- Python (Flask pour le backend)
-- HTML, CSS, JavaScript (pour le front-end)
-- Q-Learning / DQN
-" > README.md
+   Enfin, ouvrez l'interface web en lançant le fichier `index.html` avec l'extension **Live Server** dans votre éditeur de code (Visual Studio Code).
